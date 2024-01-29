@@ -50,13 +50,6 @@ const list = document.querySelector('.products')
 const postBtn = document.querySelector('.create-product button')
 const prokrutka = document.querySelector('.post')
 
-prokrutka.addEventListener('click', function() {
-    window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: 'smooth'
-    })
-});
-
 // отобразить все продукты
 document.addEventListener('DOMContentLoaded', async e => {
 	e.preventDefault()
@@ -66,19 +59,27 @@ document.addEventListener('DOMContentLoaded', async e => {
 			list.insertAdjacentHTML(
 				`beforeend`,
 				`
-			<li class="productItem">
-				<div class="block-color">
-					<img src="${product.color}">
-				</div>
-				<div class="text-info">
-					<p class="title">${product.title}</p>
-					<div class="price"><span>${product.ingridients
-									.map(comment => `<li class="com">${comment}</li>`)
-									.join('')}</span> | ⏱️${product.price} минут</div>
+				<li class="productItem">
+					<div class="block-color">
+						<img src="https://eda.ru/images/RecipePhoto/190x190/brauni-brownie_20955_photo_29166.webp">
 					</div>
-				</div>
-			</li>
-			`
+					<div class="text-info">
+						<div class="title">
+							<p>Брауни</p>
+							<p class="timer">30 минут</p>
+						</div>
+						<div class="price">
+							<div class="likeOrDislike">
+								<span class="post-rating-button material-icons liked1">thumb_up</span>
+								<span class="post-rating-button material-icons disliked1">thumb_down</span>
+							</div>
+							<div class="price-info">
+								<span class="post-rating-button material-icons menu">reorder</span>
+							</div>
+						</div>
+					</div>
+				</li>
+				`
 			)	
 		})
 	} catch (error) {
