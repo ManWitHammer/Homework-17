@@ -46,27 +46,34 @@ const patchData = (url, id, title, price, ingridients, color) => {
 	)
 }
 
-const list = document.querySelector('.products')
+const container = document.querySelector('.container')
 const postBtn = document.querySelector('.create-product button')
 const prokrutka = document.querySelector('.post')
 
 // отобразить все продукты
+
 document.addEventListener('DOMContentLoaded', async e => {
 	e.preventDefault()
 	try {
 		const products = await getData('http://localhost:3000/PRODUCTS')
 		products.forEach(product => {
-			list.insertAdjacentHTML(
+			container.insertAdjacentHTML(
 				`beforeend`,
 				`
 				<li class="productItem">
 					<div class="block-color">
-						<img src="https://eda.ru/images/RecipePhoto/190x190/brauni-brownie_20955_photo_29166.webp">
+						<img src="${product.color}">
 					</div>
 					<div class="text-info">
 						<div class="title">
-							<p>Брауни</p>
-							<p class="timer">30 минут</p>
+							<div class="title1">${
+								product.title.length > 12
+									? `${product.title.substring(0, 12)}...`
+									: product.title
+								}
+								<div class ="full-title">${product.title}</div>
+							</div>
+							<p class="timer">${product.price} минут</p>
 						</div>
 						<div class="price">
 							<div class="likeOrDislike">
@@ -81,6 +88,7 @@ document.addEventListener('DOMContentLoaded', async e => {
 				</li>
 				`
 			)	
+			
 		})
 	} catch (error) {
 		console.log(error)
@@ -88,23 +96,23 @@ document.addEventListener('DOMContentLoaded', async e => {
 })
 
 // добавить новый продукт
-postBtn.addEventListener('click', async e => {
-	e.preventDefault()
-	let title = document.querySelector('#title').value
-	let price = +document.querySelector('#time').value
-	let ingridients = document.querySelector('#ingredients').value
-	let color = document.querySelector('#image').value
-	try {
-		await postData(
-			'http://localhost:3000/PRODUCTS',
-			title,
-			price,
-			ingridients,
-			color
-		).then(response => {
-			console.log(response, 'данные успешно добавлены')
-		})
-	} catch (error) {
-		console.error(error)
-	}
-})
+// postBtn.addEventListener('click', async e => {
+// 	e.preventDefault()
+// 	let title = document.querySelector('#title').value
+// 	let price = +document.querySelector('#time').value
+// 	let ingridients = document.querySelector('#ingredients').value
+// 	let color = document.querySelector('#image').value
+// 	try {
+// 		await postData(
+// 			'http://localhost:3000/PRODUCTS',
+// 			title,
+// 			price,
+// 			ingridients,
+// 			color
+// 		).then(response => {
+// 			console.log(response, 'данные успешно добавлены')
+// 		})
+// 	} catch (error) {
+// 		console.error(error)
+// 	}
+// })
