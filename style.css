@@ -29,10 +29,9 @@ body {
 	min-width: 100vh;
 }
 
-.h3 {
-	margin-top: 15px;
+h3 {
+	color: white;
 	width: 600px;
-	text-align: center;
 }
 
 .fixedblock {
@@ -54,6 +53,7 @@ body {
 	text-underline-offset: 10px;
 	text-decoration-thickness: 3px;
 	margin-left: 40px;
+	cursor: pointer;
 }
 
 .container {
@@ -63,6 +63,11 @@ body {
 	flex-direction: row;
 	align-items: center;
 	overflow-x: auto;
+}
+
+.reverseContainer {
+	overflow-x: none;
+	height: auto;
 }
 
 .container::-webkit-scrollbar {
@@ -82,36 +87,48 @@ body {
 
 h1 {
 	margin-top: 30px;
-	margin-bottom: 5px;
+	margin-bottom: 35px;
 }
 
-.buttons {
-	display: flex;
-	gap: 10px;
-	margin-bottom: 5px;
-	margin-top: 20px;
+.left-section {
+    height: 390px;
+	width: 350px;
+    background: linear-gradient(to bottom right, #a6c0fe, #f68084);
+    color: white;
+    padding: 20px;
 }
+
+.right-section {
+	margin-left: 40px;
+    width: 50%;
+    padding: 20px;
+}
+
+input, textarea {
+   width: calc(100% - 40px);
+   margin-bottom: 10px;
+   padding: 10px;
+   font-size: 16px;
+   border: 0px;
+   background: none;
+   color: white;
+   border-bottom: 5px solid white;
+}
+
+input:placeholder-shown, textarea:placeholder-shown { color: none; }
+
+input::placeholder, textarea::placeholder { color: white; }
 
 button {
-	font-size: 25px;
-	padding: 5px;
-	width: 490px;
-	height: 70px;
-	border-radius: 20px;
-	-webkit-transform: scale(1.0);
-	-ms-transform: scale(1.0);
-	transform: scale(1.0);
-	transition: 0.6s ease;
-	cursor: pointer;
+   padding: 10px 20px;
+   font-size: 26px;
+   width: 70%;
+   height: 50px;
+   border-radius: 10px;
+   cursor: pointer;
 }
 
-button:hover {
-	-webkit-transform: scale(1.2);
-	-ms-transform: scale(1.2);
-	transform: scale(1.2);
-}
-
-.container li {
+.productItem {
 	height: 390px;
 	width: 350px;
 	display: flex;
@@ -120,6 +137,11 @@ button:hover {
 	background: #3e3e3e74;
 	border-radius: 10px;
 	margin-left: 20px;
+}
+
+.error {
+	font-size: 22px;
+	color: red;
 }
 
 .block-color {
@@ -156,7 +178,7 @@ button:hover {
   
 .full-title {
 	position: absolute;
-	top: -40px;
+	top: -20px;
 	left: -10px;
 	font-size: 24px; 
 	background: none;
@@ -172,6 +194,7 @@ button:hover {
 }
   
 .title1:hover .full-title {
+	top: -40px;
 	background: rgb(66, 66, 66);
 	color: white;
 }
@@ -193,6 +216,9 @@ img {
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
+	background-image: url(notfind.png);
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 
 .likeOrDislike {
@@ -204,21 +230,31 @@ img {
 
 .liked1,
 .disliked1 {
+	position: relative;
 	width: 25px;
 	height: 25px;
 	margin-right: 10px;
+	color: white;
+	cursor: pointer;
+	font-size: 27px;
+	font-weight: 200;
+}
+
+.liked1:hover .full-title {
+	top: -40px;
+	background: rgb(66, 66, 66);
+	color: white;
+}
+
+.disliked1:hover .full-title {
+	top: -40px;
+	background: rgb(66, 66, 66);
 	color: white;
 }
 
 .liked-active {
 	color: red; 
   }
-
-.liked1:hover,
-.disliked1:hover,
-.menu:hover {
-	color: grey;
-}
 
 .disliked {
 	transform: rotate(180deg);
@@ -244,51 +280,4 @@ img {
 	display: block;
 }
 
-.price span {
-	cursor: pointer;
-	transition: 0.6s ease;
-}
 
-.price span:hover .ingrid {
-	display: block;
-}
-
-.create-product {
-	border-top: 5px solid black;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	padding: 25px;
-}
-
-.create-product h1 {
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-.create-product button {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	margin: auto;
-}
-
-input {
-	height: 40px;
-	width: 90%;
-	text-align: center;
-	font-size: 30px;
-	margin-bottom: 15px;
-	border-radius: 10px;
-}
-
-#time {
-	width: 80px;
-}
-
-textarea {
-	font-size: 30px;
-	margin-bottom: 15px;
-	height: 100px;
-	width: 90%;
-	padding: 10px;
-}
