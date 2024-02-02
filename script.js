@@ -42,12 +42,15 @@ const getData = url =>
 	)
 }
 
+const body = document.querySelector('body')
 const container = document.querySelector('.container')
 const h1 = document.querySelector('h1')
 const postBtn = document.querySelector('.create-product button')
 const prokrutka = document.querySelector('.post')
 const seeIt = document.querySelector('.seeIt')
 const addIt = document.querySelector('.addIt')
+const reception = document.querySelector('.allRec')
+const recH1 = document.querySelector('.reception h1')
 // отобразить все продукты
 
 document.addEventListener('DOMContentLoaded', async e => {
@@ -68,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async e => {
 								<div class="full-title">
 									<div class="post-rating-button material-icons deleted">delete Удалить рецепт</div>
 									<div class="post-rating-button material-icons commented">comment Посмотреть сообщение</div>
-									<div class="post-rating-button material-icons commented">search Посмотреть рецепты</div>
+									<div class="post-rating-button material-icons searched">search Посмотреть ингридиенты</div>
 								</div>
 								reorder
 							</div>
@@ -111,41 +114,39 @@ document.addEventListener('DOMContentLoaded', async e => {
 			likeButton.addEventListener('click', async e => {
 				e.preventDefault()
 				try {
-					const titleElement = likeButton.querySelector('.full-title');
-					const titleElement1 = likeButton.parentElement.querySelector('.disliked1 .full-title');
 					const id = likeButton.parentElement.parentElement.parentElement.querySelector('.title')
-										.querySelector('.title1').querySelector('.full-title').innerText
-					let newProd = products.filter(el => el.id == id)
-					newProd = newProd[0].likes[1]
-					let newProd1 = products.filter(el => el.id == id)
-					newProd1 = newProd1[0].dislikes[1]
+                                    .querySelector('.title1').querySelector('.full-title').innerText
 
-					if (newProd) {
-						titleElement.innerText--
-						newProd = false
-						titleElement1.innerText++
-						newProd1 = true
-				
+					const response = await fetch(`http://localhost:3000/PRODUCTS/${id}`);
+					const product = await response.json()
+					if (product.dislikes[1]) {
+						  product.dislikes[0]--
+						  product.dislikes[1] = false;
 					}
-					else if (newProd1 == true && newProd == true) {
-						titleElement.innerText--
-						newProd = false
-						titleElement1.innerText--
-						newProd1 = false
+								  
+					if (!product.likes[1]) {
+						product.likes[0]++
+					    product.likes[1] = true
+						  
 					}
+					
 					else {
-						titleElement.innerText++
-						newProd = true
-						titleElement1.innerText--
-						newProd1 = false
+						product.likes[0]--
+						product.likes[1] = false
 					}
-					let allLikes = +titleElement.innerText
-					let likes1 = [allLikes, newProd]
-					console.log(likes1)
-				
-					await patchData(`http://localhost:3000/PRODUCTS/${id}`, {likes: likes1}).then(response => {
-						console.log(response, 'данные успешно обновлены')
+						  
+					const patchResponse = await fetch(`http://localhost:3000/PRODUCTS/${id}`, {
+					    method: 'PATCH',
+						body: JSON.stringify({
+							likes: product.likes,
+							dislikes: product.dislikes
+						}),
+						headers: { 'Content-Type': 'application/json' }
 					})
+						  
+					const updatedProduct = await patchResponse.json();
+					console.log(updatedProduct)
+
 				} catch (error) {
 					console.error(error, 'не получилось обновить данные')
 				}
@@ -157,41 +158,37 @@ document.addEventListener('DOMContentLoaded', async e => {
 			likeButton.addEventListener('click', async e => {
 				e.preventDefault()
 				try {
-					const titleElement = likeButton.querySelector('.full-title');
-					const titleElement1 = likeButton.parentElement.querySelector('.liked1 .full-title');
-					console.log(titleElement1)
 					const id = likeButton.parentElement.parentElement.parentElement.querySelector('.title')
-										.querySelector('.title1').querySelector('.full-title').innerText
-					let newProd = products.filter(el => el.id == id)
-					newProd = newProd[0].dislikes[1]
-					let newProd1 = products.filter(el => el.id == id)
-					newProd1 = newProd1[0].likes[1]
-					console.log(newProd)	
-					if (newProd) {
-						titleElement.innerText--
-						newProd = false
-						titleElement1.innerText++
-						newProd1 = true
-						
-					} 
-					else if (newProd1 == true && newProd == true) {
-						titleElement.innerText--
-						newProd = false
-						titleElement1.innerText--
-						newProd1 = false
-					} 
-					else {
-						titleElement.innerText++;
-						newProd = true  
-						titleElement1.innerText--
-						newProd1 = false
+                                    .querySelector('.title1').querySelector('.full-title').innerText
+					
+					const response = await fetch(`http://localhost:3000/PRODUCTS/${id}`);
+					const product = await response.json()
+					if (product.likes[1]) {
+						product.likes[0]--
+						product.likes[1] = false
 					}
-					let allLikes = +titleElement.innerText;
-					let likes1 = [allLikes, newProd]
-					console.log(likes1)
-						await patchData(`http://localhost:3000/PRODUCTS/${id}`, {dislikes: likes1}).then(response => {
-							console.log(response, 'данные успешно обновлены')
-						})
+
+					if (!product.dislikes[1]) {
+					  product.dislikes[0]++
+					  product.dislikes[1] = true
+					}
+
+					else {
+					  product.dislikes[0]--
+					  product.dislikes[1] = false
+					}
+								  
+					const patchResponse = await fetch(`http://localhost:3000/PRODUCTS/${id}`, {
+					    method: 'PATCH',
+						body: JSON.stringify({
+							likes: product.likes,
+							dislikes: product.dislikes
+						}),
+						headers: { 'Content-Type': 'application/json' }
+					})
+						  
+					const updatedProduct = await patchResponse.json();
+					console.log(updatedProduct)
 				} catch (error) {
 					console.error(error, 'не получилось обновить данные')
 				}
@@ -211,6 +208,95 @@ document.addEventListener('DOMContentLoaded', async e => {
 				} catch (err) {
 					console.error(err, 'ошибка при удалении')
 				}
+			})
+		})
+		const searchButtons = document.querySelectorAll('.searched')
+		searchButtons.forEach(searchButton => {
+			searchButton.addEventListener('click', async e => {
+				e.preventDefault()
+				const id = searchButton.parentElement.parentElement.parentElement.parentElement.parentElement
+				.querySelector('.text-info .title .title1 .full-title').innerText
+				let newProd = products.filter(el => el.id == id)
+				reception.innerHTML = ''
+				console.log(newProd[0].ingridients)
+				recH1.innerText = `Ингридиенты для ${newProd[0].title}`
+				reception.insertAdjacentHTML(`beforeend`, 
+				`
+				${newProd[0].ingridients.map(el => `<li class>${el}</li>`).join('')}
+				`
+				)
+			})
+		})
+		const commentButtons = document.querySelectorAll('.commented')
+		commentButtons.forEach(commentButton => {
+			commentButton.addEventListener('click', async e => {
+				e.preventDefault()
+				const id = commentButton.parentElement.parentElement.parentElement.parentElement.parentElement
+				.querySelector('.text-info .title .title1 .full-title').innerText
+				let newProd = products.filter(el => el.id == id)
+				reception.innerHTML = ''
+				console.log(newProd[0].comments)
+				recH1.innerText = `Комментарии ${newProd[0].title}`
+				reception.insertAdjacentHTML(`beforeend`, 
+				`
+				${newProd[0].comments[0].map(el => `<li class="comments">${el}</li>`).join('')}
+				<form id="commentsForm">
+					<textarea id="commentsInput"></textarea>
+					<button type="submit">Отправить</button>
+				</form>
+				`
+				)
+				const addComment = document.querySelector('.reception button')
+				addComment.addEventListener('click', async e => {
+					let now = new Date()
+					e.preventDefault()
+					const id = newProd[0].title
+					console.log(id)
+					const allCom = newProd[0].comments[0]
+					const tOrF = newProd[0].comments[0]
+					if (document.querySelector('#commentsInput').value.length > 0) {
+						allCom.push(`<h4>User1 | <span> ${now.getDate()}/${now.getMonth()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}</span></h4><p>${document.querySelector('#commentsInput').value}</p>`)
+					}
+					await patchData(`http://localhost:3000/PRODUCTS/${id}`, {comments: [allCom, tOrF]}).then(response => {
+							console.log(response, 'данные успешно обновлены')
+						})
+				})
+					const commentContainers = document.querySelectorAll('.comments');
+					commentContainers.forEach(commentContainer => {
+						commentContainer.addEventListener('dblclick', () => {
+						const thisEl = commentContainer.innerHTML
+						commentContainer.insertAdjacentHTML('beforeend', `
+							<input class="yohoo" type="text" value="${commentContainer.querySelector('p').innerText}">
+							<button class="edited" type="submit">Отправить</button>
+						`);
+						
+
+						const input1 = commentContainer.querySelector('.yohoo');
+						console.log(input1);
+
+						input1.addEventListener('input', () => {
+							commentContainer.querySelector('p').innerText = input1.value
+						})
+						const editButton = commentContainer.querySelector('.edited');
+						editButton.addEventListener('click', async e => {
+							e.preventDefault()
+							let now = new Date()
+							const id = newProd[0].title
+							console.log(id)
+							const allCom = newProd[0].comments[0]
+							const tOrF = newProd[0].comments[1]
+							let filtCom = allCom.findIndex(el => el == thisEl)
+							
+							if (input1.value.length > 0) {
+								allCom[filtCom] = `<h4>User1 | <span> ${now.getDate()}/${now.getMonth()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}</span></h4><p>${input1.value}(Ред.)</p>`
+							}
+							console.log(allCom)
+							await patchData(`http://localhost:3000/PRODUCTS/${id}`, {comments: [allCom, tOrF]}).then(response => {
+								console.log(response, 'данные успешно обновлены')
+							})
+						})
+					})
+				});
 			})
 		})
 	} catch (error) {
@@ -289,6 +375,7 @@ addIt.addEventListener('click', () => {
 				let color = document.querySelector('.img').style.backgroundImage
 				let likes = [0, false]
 				let dislikes = [0, false]
+				let comments = []
 				await postData('http://localhost:3000/PRODUCTS', {
 					id: title.trim(''),
 					title,
@@ -296,7 +383,8 @@ addIt.addEventListener('click', () => {
 					ingridients,
 					color,
 					likes,
-					dislikes
+					dislikes,
+					comments
 				}).then(response => {
 					console.log(response, 'данные успешно добавлены')
 				})

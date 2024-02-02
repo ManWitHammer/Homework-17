@@ -13,11 +13,21 @@
       ],
       "color": "https://eda.ru/images/RecipePhoto/190x190/brauni-brownie_20955_photo_29166.webp",
       "likes": [
-        1126,
-        false
+        1127,
+        true
       ],
       "dislikes": [
         2235,
+        false
+      ],
+      "comments": [
+        [
+          "<h4>User1 | <span> 3/1/2024 0:19:35</span></h4><p>а я нет(Ред.)</p>",
+          "<h4>User1 | <span> 2/1/2024 21:1:51</span></h4><p>Ура, заработало!!!\nДААААААААА</p>",
+          "<h4>User1 | <span> 2/1/2024 22:34:18</span></h4><p>Пидары умеют только сосать - Жако Фреска</p>",
+          "<h4>User1 | <span> 2/1/2024 22:57:30</span></h4><p>Hello, everyone! <*w*>\nP.S u stupid user</p>",
+          "<h4>User1 | <span> 2/1/2024 22:57:57</span></h4><p>why</p>"
+        ],
         false
       ],
       "id": "Брауни"
@@ -41,6 +51,18 @@
         2224,
         false
       ],
+      "comments": [
+        [
+          "<h4>User1 | <span> 14/10/2020 12:10:56</span></h4><p>а я гей</p>",
+          "<h4>User1 | <span> 2/1/2024 23:14:20</span></h4><p>sdfsdfds</p>",
+          "<h4>User1 | <span> 2/1/2024 23:14:31</span></h4><p>GG ez</p>"
+        ],
+        [
+          "<h4>User1 | <span> 14/10/2020 12:10:56</span></h4><p>а я гей</p>",
+          "<h4>User1 | <span> 2/1/2024 23:14:20</span></h4><p>sdfsdfds</p>",
+          "<h4>User1 | <span> 2/1/2024 23:14:31</span></h4><p>GG ez</p>"
+        ]
+      ],
       "id": "Сырники из творога"
     },
     {
@@ -63,6 +85,10 @@
         2222,
         false
       ],
+      "comments": [
+        [],
+        false
+      ],
       "id": "Классическая шарлотка"
     },
     {
@@ -80,11 +106,15 @@
       ],
       "color": "https://eda.ru/images/RecipePhoto/190x190/lazanja-klassicheskaja-s-mjasom_31799_photo_28746.webp",
       "likes": [
-        1111,
-        true
+        1110,
+        false
       ],
       "dislikes": [
         2222,
+        false
+      ],
+      "comments": [
+        [],
         false
       ],
       "id": "Лазанья классическая с мясом"
@@ -102,11 +132,15 @@
       ],
       "color": "https://eda.ru/images/RecipePhoto/190x190/tonkie-blini-na-moloke_16014_photo_24909.webp",
       "likes": [
-        1111,
-        true
+        1110,
+        false
       ],
       "dislikes": [
         2222,
+        false
+      ],
+      "comments": [
+        [],
         false
       ],
       "id": "Тонкие блины на молоке"
@@ -127,11 +161,15 @@
       ],
       "color": "https://eda.ru/images/RecipePhoto/190x190/amerikanskij-tikvennij-pirog-s-koricej_18811_photo_19337.webp",
       "likes": [
-        1111,
-        true
+        1110,
+        false
       ],
       "dislikes": [
         2222,
+        false
+      ],
+      "comments": [
+        [],
         false
       ],
       "id": "Американский тыквенный пирог с корицей"
@@ -157,6 +195,10 @@
         2222,
         false
       ],
+      "comments": [
+        [],
+        false
+      ],
       "id": "Пирог Зебра"
     },
     {
@@ -176,11 +218,15 @@
       ],
       "color": "https://eda.ru/images/RecipePhoto/190x190/maffiny-s-golubikoy_21506_photo_57517.webp",
       "likes": [
-        1111,
-        true
+        1110,
+        false
       ],
       "dislikes": [
         2222,
+        false
+      ],
+      "comments": [
+        [],
         false
       ],
       "id": "Маффины с голубикой и мускатным орехом"
@@ -207,11 +253,15 @@
       ],
       "color": "https://eda.ru/images/RecipePhoto/190x190/kurica-pikasso_25902_photo_9940.webp",
       "likes": [
-        1111,
-        true
+        1110,
+        false
       ],
       "dislikes": [
         2222,
+        false
+      ],
+      "comments": [
+        [],
         false
       ],
       "id": "Курица Пикассо"
@@ -232,11 +282,17 @@
       ],
       "color": "https://eda.ru/images/RecipePhoto/190x190/tort-smetannik_23485_photo_151947.webp",
       "likes": [
-        1111,
-        true
+        1110,
+        false
       ],
       "dislikes": [
         2222,
+        false
+      ],
+      "comments": [
+        [
+          "<h4>User1 | <span> 14/10/2020 12:10:56</span></h4><p>а я гей</p>"
+        ],
         false
       ],
       "id": "Торт Сметанник"
@@ -258,6 +314,12 @@
       "dislikes": [
         2222,
         false
+      ],
+      "comments": [
+        [
+          "<h4>User1 | <span> 14/10/2020 12:10:56</span></h4><p>а я гей</p>"
+        ],
+        false
       ]
     },
     {
@@ -275,6 +337,12 @@
       ],
       "dislikes": [
         0,
+        false
+      ],
+      "comments": [
+        [
+          "<h4>User1 | <span> 14/10/2020 12:10:56</span></h4><p>а я гей</p>"
+        ],
         false
       ]
     }
