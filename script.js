@@ -20,21 +20,14 @@ const getData = url =>
 	}
 	
 
-const deleteData = (url, productId) => {
-	return new Promise((resolve, reject) =>
-	  fetch(`${url}/${productId}`, {
-		method: 'DELETE',
-	  })
-		.then(response => {
-		  if (response.ok) {
-			resolve('Данные успешно удалены');
-		  } else {
-			reject('Ошибка удаления данных');
-		  }
-		})
-		.catch(error => reject(error))
-	);
-  }
+	const delData = url => {
+		return new Promise((resolve, reject) =>
+			fetch(url, { method: 'DELETE' })
+				.then(response => response.json())
+				.then(json => resolve(json))
+				.catch(error => reject(error))
+		)
+	}
 
   const patchData = (url, product) => {
 	return new Promise((resolve, reject) =>
@@ -70,7 +63,16 @@ document.addEventListener('DOMContentLoaded', async e => {
 				`
 				<li class="productItem">
 					<div class="block-color">
-						<img src="${product.color}">
+						<div class="img" style="background-image: url(${product.color});">
+							<div class="post-rating-button material-icons menu">
+								<div class="full-title">
+									<div class="post-rating-button material-icons deleted">delete Удалить рецепт</div>
+									<div class="post-rating-button material-icons commented">comment Посмотреть сообщение</div>
+									<div class="post-rating-button material-icons commented">search Посмотреть рецепты</div>
+								</div>
+								reorder
+							</div>
+						</div>
 					</div>
 					<div class="text-info">
 						<div class="title">
@@ -94,12 +96,9 @@ document.addEventListener('DOMContentLoaded', async e => {
 								<div class="post-rating-button material-icons disliked1" style="color: ${product.dislikes[1] == true
 																										? 'red'
 																										: 'white'};">
-								thumb_down
-								<div class="full-title">${product.dislikes[0]}</div>
+									thumb_down
+									<div class="full-title">${product.dislikes[0]}</div>
 								</div>
-							</div>
-							<div class="price-info">
-								<span class="post-rating-button material-icons menu">reorder</span>
 							</div>
 						</div>
 					</div>
@@ -111,38 +110,39 @@ document.addEventListener('DOMContentLoaded', async e => {
 		likeButtons.forEach(likeButton => {
 			likeButton.addEventListener('click', async e => {
 				e.preventDefault()
-				const titleElement = likeButton.querySelector('.full-title');
-				const titleElement1 = likeButton.parentElement.querySelector('.disliked1 .full-title');
-				const id = likeButton.parentElement.parentElement.parentElement.querySelector('.title')
-									.querySelector('.title1').querySelector('.full-title').innerText
-				let newProd = products.filter(el => el.id == id)
-				newProd = newProd[0].likes[1]
-				let newProd1 = products.filter(el => el.id == id)
-				newProd1 = newProd1[0].dislikes[1]
-
-				if (newProd) {
-					titleElement.innerText--
-					newProd = false
-					titleElement1.innerText++
-					newProd1 = true
-			  
-				}
-				else if (newProd1 == true && newProd == true) {
-					titleElement.innerText--
-					newProd = false
-					titleElement1.innerText--
-					newProd1 = false
-				}
-				else {
-					titleElement.innerText++
-					newProd = true
-					titleElement1.innerText--
-					newProd1 = false
-				}
-				let allLikes = +titleElement.innerText
-				let likes1 = [allLikes, newProd]
-				console.log(likes1)
 				try {
+					const titleElement = likeButton.querySelector('.full-title');
+					const titleElement1 = likeButton.parentElement.querySelector('.disliked1 .full-title');
+					const id = likeButton.parentElement.parentElement.parentElement.querySelector('.title')
+										.querySelector('.title1').querySelector('.full-title').innerText
+					let newProd = products.filter(el => el.id == id)
+					newProd = newProd[0].likes[1]
+					let newProd1 = products.filter(el => el.id == id)
+					newProd1 = newProd1[0].dislikes[1]
+
+					if (newProd) {
+						titleElement.innerText--
+						newProd = false
+						titleElement1.innerText++
+						newProd1 = true
+				
+					}
+					else if (newProd1 == true && newProd == true) {
+						titleElement.innerText--
+						newProd = false
+						titleElement1.innerText--
+						newProd1 = false
+					}
+					else {
+						titleElement.innerText++
+						newProd = true
+						titleElement1.innerText--
+						newProd1 = false
+					}
+					let allLikes = +titleElement.innerText
+					let likes1 = [allLikes, newProd]
+					console.log(likes1)
+				
 					await patchData(`http://localhost:3000/PRODUCTS/${id}`, {likes: likes1}).then(response => {
 						console.log(response, 'данные успешно обновлены')
 					})
@@ -156,46 +156,61 @@ document.addEventListener('DOMContentLoaded', async e => {
 		dislikeButtons.forEach(likeButton => {
 			likeButton.addEventListener('click', async e => {
 				e.preventDefault()
-				const titleElement = likeButton.querySelector('.full-title');
-				const titleElement1 = likeButton.parentElement.querySelector('.liked1 .full-title');
-				console.log(titleElement1)
-				const id = likeButton.parentElement.parentElement.parentElement.querySelector('.title')
-									.querySelector('.title1').querySelector('.full-title').innerText
-				let newProd = products.filter(el => el.id == id)
-				newProd = newProd[0].dislikes[1]
-				let newProd1 = products.filter(el => el.id == id)
-				newProd1 = newProd1[0].likes[1]
-				console.log(newProd)	
-				if (newProd) {
-					titleElement.innerText--
-					newProd = false
-					titleElement1.innerText++
-					newProd1 = true
-					
-				  } 
-				  else if (newProd1 == true && newProd == true) {
-					titleElement.innerText--
-					newProd = false
-					titleElement1.innerText--
-					newProd1 = false
-				} 
-				  else {
-					titleElement.innerText++;
-					newProd = true  
-					titleElement1.innerText--
-					newProd1 = false
-				  }
-				let allLikes = +titleElement.innerText;
-				let likes1 = [allLikes, newProd]
-				console.log(likes1)
 				try {
-					await patchData(`http://localhost:3000/PRODUCTS/${id}`, {dislikes: likes1}).then(response => {
-						console.log(response, 'данные успешно обновлены')
-					})
+					const titleElement = likeButton.querySelector('.full-title');
+					const titleElement1 = likeButton.parentElement.querySelector('.liked1 .full-title');
+					console.log(titleElement1)
+					const id = likeButton.parentElement.parentElement.parentElement.querySelector('.title')
+										.querySelector('.title1').querySelector('.full-title').innerText
+					let newProd = products.filter(el => el.id == id)
+					newProd = newProd[0].dislikes[1]
+					let newProd1 = products.filter(el => el.id == id)
+					newProd1 = newProd1[0].likes[1]
+					console.log(newProd)	
+					if (newProd) {
+						titleElement.innerText--
+						newProd = false
+						titleElement1.innerText++
+						newProd1 = true
+						
+					} 
+					else if (newProd1 == true && newProd == true) {
+						titleElement.innerText--
+						newProd = false
+						titleElement1.innerText--
+						newProd1 = false
+					} 
+					else {
+						titleElement.innerText++;
+						newProd = true  
+						titleElement1.innerText--
+						newProd1 = false
+					}
+					let allLikes = +titleElement.innerText;
+					let likes1 = [allLikes, newProd]
+					console.log(likes1)
+						await patchData(`http://localhost:3000/PRODUCTS/${id}`, {dislikes: likes1}).then(response => {
+							console.log(response, 'данные успешно обновлены')
+						})
 				} catch (error) {
 					console.error(error, 'не получилось обновить данные')
 				}
 			
+			})
+		})
+		const deleteButtons = document.querySelectorAll('.deleted')
+		deleteButtons.forEach(deleteButton => {
+			deleteButton.addEventListener('click', async e => {
+				e.preventDefault()
+				const id = deleteButton.parentElement.parentElement.parentElement.parentElement.parentElement
+				.querySelector('.text-info .title .title1 .full-title').innerText
+				try {
+					delData(`http://localhost:3000/PRODUCTS/${id}`).then(response => {
+						console.log(response, `продукт с id = ${id} успешно удалён`)
+					})
+				} catch (err) {
+					console.error(err, 'ошибка при удалении')
+				}
 			})
 		})
 	} catch (error) {
@@ -211,7 +226,9 @@ addIt.addEventListener('click', () => {
 		`
 		<div class="productItem">
 			<div class="block-color">
-				<img src="">
+				<div class="img">
+					<span class="post-rating-button material-icons menu">reorder</span>
+				</div>
 			</div>
 			<div class="text-info">
 				<div class="title">
@@ -222,11 +239,8 @@ addIt.addEventListener('click', () => {
 				</div>
 				<div class="price">
 					<div class="likeOrDislike">
-						<span class="post-rating-button material-icons liked1">thumb_up</span>
-						<span class="post-rating-button material-icons disliked1">thumb_down</span>
-					</div>
-					<div class="price-info">
-						<span class="post-rating-button material-icons menu">reorder</span>
+						<div class="post-rating-button material-icons liked1">thumb_up</div>
+						<div class="post-rating-button material-icons disliked1">thumb_down</div>
 					</div>
 				</div>
 			</div>
@@ -259,8 +273,9 @@ addIt.addEventListener('click', () => {
 		document.querySelector('.timer').innerText = numberedHim.value.slice(0, 3) + ' минут'
 	})
 	imgedHim.addEventListener('input', () => {
-		document.querySelector('.block-color img').src = imgedHim.value
+		document.querySelector('.img').style.backgroundImage = `url(${imgedHim.value})`
 	})
+	console.log(document.querySelector('.img').style.backgroundImage)
 	addedHim.addEventListener('click', async e => {
 		if (namedHim.value.length < 1 || numberedHim.value.length < 1 || imgedHim.value.length < 1 || readedHim.value.length < 1) {
 			alert('Заполните все поля')
@@ -271,7 +286,7 @@ addIt.addEventListener('click', () => {
 				let title = namedHim.value
 				let price = numberedHim.value.slice(0, 3)
 				let ingridients = readedHim.value.split(', ')
-				let color = document.querySelector('.block-color img').src
+				let color = document.querySelector('.img').style.backgroundImage
 				let likes = [0, false]
 				let dislikes = [0, false]
 				await postData('http://localhost:3000/PRODUCTS', {
@@ -306,7 +321,9 @@ seeIt.addEventListener('click', async e => {
 				`
 				<li class="productItem">
 					<div class="block-color">
-						<img src="${product.color}">
+						<div class="img" style="background-image: url(${product.color});">
+							<span class="post-rating-button material-icons menu">reorder</span>
+						</div>
 					</div>
 					<div class="text-info">
 						<div class="title">
@@ -321,11 +338,18 @@ seeIt.addEventListener('click', async e => {
 						</div>
 						<div class="price">
 							<div class="likeOrDislike">
-								<span class="post-rating-button material-icons liked1">thumb_up</span>
-								<span class="post-rating-button material-icons disliked1">thumb_down</span>
-							</div>
-							<div class="price-info">
-								<span class="post-rating-button material-icons menu">reorder</span>
+								<div class="post-rating-button material-icons liked1" style="color: ${product.likes[1] == true
+																										? 'red'
+																										: 'white'};">
+									thumb_up
+									<div class="full-title">${product.likes[0]}</div>
+								</div>
+								<div class="post-rating-button material-icons disliked1" style="color: ${product.dislikes[1] == true
+																										? 'red'
+																										: 'white'};">
+									thumb_down
+									<div class="full-title">${product.dislikes[0]}</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -333,7 +357,6 @@ seeIt.addEventListener('click', async e => {
 				`
 			)	
 		})
-		console.log(document.querySelectorAll('.productItem'))
 	} catch (error) {
 		body.innerHTML = `<h1>${error}</h1>`
 	}

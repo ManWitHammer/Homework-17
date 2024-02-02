@@ -153,6 +153,7 @@ button {
 	background-repeat: no-repeat;
 	background-size: contain;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
@@ -200,7 +201,8 @@ button {
 }
 
 .price {
-	width: 25%;
+	margin-left: 10px;
+	width: 24%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -212,20 +214,83 @@ button {
 	color: rgb(186, 186, 186);
 }
 
-img {
+.img {
 	width: 100%;
 	height: 100%;
+	display: flex;
+	justify-content: start;
 	border-radius: 10px;
 	background-image: url(notfind.png);
 	background-repeat: no-repeat;
 	background-size: contain;
 }
 
+.menu {
+	position: relative;
+	color: white;
+	font-size: 30px;
+	margin: 10px;
+	height: 24px;
+	text-shadow: 
+		-0   -0.5px 0   #000000,
+		 0   -0.5px 0   #000000,
+		-0    0.5px 0   #000000,
+		 0    0.5px 0   #000000,
+		-0.5px -0   0   #000000,
+		 0.5px -0   0   #000000,
+		-0.5px  0   0   #000000,
+		 0.5px  0   0   #000000,
+		-1px -0.5px 0   #000000,
+		 1px -0.5px 0   #000000,
+		-1px  0.5px 0   #000000,
+		 1px  0.5px 0   #000000,
+		-0.5px -1px 0   #000000,
+		 0.5px -1px 0   #000000,
+		-0.5px  1px 0   #000000,
+		 0.5px  1px 0   #000000,
+		-0.5px -0.5px 0   #000000,
+		 0.5px -0.5px 0   #000000,
+		-0.5px  0.5px 0   #000000,
+		 0.5px  0.5px 0   #000000,
+		-0.5px -0.5px 0   #000000,
+		 0.5px -0.5px 0   #000000,
+		-0.5px  0.5px 0   #000000,
+		 0.5px  0.5px 0   #000000;
+		 cursor: pointer;
+}
+
+.menu .full-title {
+	display: flex;
+	flex-direction: column;
+	top: 30px;
+	left: 30px;
+	text-shadow: none;
+	z-index: 4;
+}
+
+.menu .full-title div {
+	margin: 15px;
+	font-size: 22px;
+	transition: 0.4s ease;
+}
+
+.menu .full-title div:hover {
+	font-size: 27px;
+}
+
+.menu:hover .full-title {
+	top: 0px;
+	background: rgb(66, 66, 66);
+	color: white;
+}
+
 .likeOrDislike {
 	width: 100%;
-	height: 50%;
+	height: 100%;
 	display: flex;
 	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }
 
 .liked1,
@@ -258,15 +323,6 @@ img {
 
 .disliked {
 	transform: rotate(180deg);
-}
-
-.price-info {
-	width: 100%;
-	height: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: white;
 }
 
 .ingrid {
