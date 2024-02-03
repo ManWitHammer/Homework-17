@@ -271,7 +271,7 @@ button {
 	border-radius: 10px;
 	background-image: url(notfind.png);
 	background-repeat: no-repeat;
-	background-size: contain;
+	background-size: cover;
 }
 
 .menu {

@@ -48,8 +48,8 @@
         false
       ],
       "dislikes": [
-        2224,
-        false
+        2225,
+        true
       ],
       "comments": [
         [
@@ -57,11 +57,7 @@
           "<h4>User1 | <span> 2/1/2024 23:14:20</span></h4><p>sdfsdfds</p>",
           "<h4>User1 | <span> 2/1/2024 23:14:31</span></h4><p>GG ez</p>"
         ],
-        [
-          "<h4>User1 | <span> 14/10/2020 12:10:56</span></h4><p>а я гей</p>",
-          "<h4>User1 | <span> 2/1/2024 23:14:20</span></h4><p>sdfsdfds</p>",
-          "<h4>User1 | <span> 2/1/2024 23:14:31</span></h4><p>GG ez</p>"
-        ]
+        false
       ],
       "id": "Сырники из творога"
     },
